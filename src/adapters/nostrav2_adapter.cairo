@@ -12,7 +12,9 @@ pub trait INostraV2Router<TContractState> {
         deadline: u64,
     ) -> Array<u256>;
 
-    fn get_amounts_out(self: @TContractState, amount_in: u256, token_in: ContractAddress, pairs: Span<ContractAddress>) -> (Array<u256>, ContractAddress);
+    fn get_amounts_out(
+        self: @TContractState, amount_in: u256, token_in: ContractAddress, pairs: Span<ContractAddress>,
+    ) -> (Array<u256>, ContractAddress);
 }
 
 #[starknet::contract]
@@ -70,10 +72,7 @@ pub mod NostraV2Adapter {
             let (amounts, _) = INostraV2RouterDispatcher { contract_address: exchange_address }
                 .get_amounts_out(sell_token_amount, sell_token_address, pairs.span());
 
-            let amount_out = amounts
-                .get(1) 
-                .map(|x| x.unbox().clone())
-                .unwrap_or_default();
+            let amount_out = amounts.get(1).map(|x| x.unbox().clone()).unwrap_or_default();
 
             amount_out
         }
