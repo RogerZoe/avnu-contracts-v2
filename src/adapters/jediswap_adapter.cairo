@@ -61,7 +61,7 @@ pub mod JediswapAdapter {
 
             let amount_out: u256 = IJediSwapRouterDispatcher { contract_address: exchange_address }
                 .get_amounts_out(sell_token_amount, path)
-                .get(0)
+                .get(1)
                 .map(|x| x.unbox().clone())
                 .unwrap_or_default();
 
